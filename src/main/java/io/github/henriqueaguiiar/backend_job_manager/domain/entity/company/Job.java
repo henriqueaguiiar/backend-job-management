@@ -29,10 +29,10 @@ public class Job implements Serializable {
     private  String level;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "company_id", insertable = false, updatable = false)
     private Company company;
 
-    @Column(name = "company_id", insertable = false, updatable = false)
+    @Column(name = "company_id")
     private UUID companyId;
 
 
