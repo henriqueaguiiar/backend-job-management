@@ -24,5 +24,6 @@ public class CandidateServiceImpl implements CandidateService {
                 .ifPresent((user) ->{
                     throw new UserFoundException();
                 });
+       this.candidateRepository.save(candidate);
     }
 }

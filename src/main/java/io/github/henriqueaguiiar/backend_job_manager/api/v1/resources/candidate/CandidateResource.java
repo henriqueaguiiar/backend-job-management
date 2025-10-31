@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/api/v1/candidates")
 public class CandidateResource {
@@ -28,10 +30,17 @@ public class CandidateResource {
     }
 
     @PostMapping
-    public ResponseEntity<CandidateDTO> create(@Valid @RequestBody CandidateDTO candidateDTO) {
-        Candidate candidate = candidateMapper.toEntity(candidateDTO);
-        candidateService.createCandidate( candidate );
-        return ResponseEntity.ok().body(candidateMapper.toDTO(candidate));
+    public ResponseEntity<Object> create(@Valid @RequestBody CandidateDTO candidateDTO) {
+        try{
+            Candidate candidate = candidateMapper.toEntity(candidateDTO);
+           candidateService.createCandidate( candidate );
+           var result = ResponseEntity.created(URI.create("/api/v1/candidates/" + candidate.getId())).body(candidateMapper.toDTO(candidate));
+           return ResponseEntity.ok().body(result);
+       }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+
     }
 
 }
