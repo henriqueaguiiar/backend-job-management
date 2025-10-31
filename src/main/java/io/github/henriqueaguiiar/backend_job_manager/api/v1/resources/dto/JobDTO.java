@@ -1,31 +1,32 @@
-package io.github.henriqueaguiiar.backend_job_manager.domain.entity.company;
+package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.dto;
 
 
+import io.github.henriqueaguiiar.backend_job_manager.domain.entity.company.Company;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 import java.util.UUID;
 
 
-@Entity(name = "jobs")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Job implements Serializable {
+public class JobDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
     private String description;
     private String benefits;
+    @NotBlank(message = "This field is not blank")
     private  String level;
 
     @ManyToOne
@@ -39,15 +40,4 @@ public class Job implements Serializable {
     @CreationTimestamp
     private Instant createdAt;
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Job job = (Job) o;
-        return Objects.equals(id, job.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }
