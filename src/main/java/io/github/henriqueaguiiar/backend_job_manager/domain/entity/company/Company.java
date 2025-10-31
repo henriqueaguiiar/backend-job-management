@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-@Entity
+@Entity(name = "company")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -36,6 +37,7 @@ public class Company implements Serializable {
     private String password;
     private String website;
     private String description;
+    @CreationTimestamp
     private Instant createdAt;
 
 
