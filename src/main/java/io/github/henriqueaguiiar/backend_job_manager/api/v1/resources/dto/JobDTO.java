@@ -29,15 +29,9 @@ public class JobDTO implements Serializable {
     @NotBlank(message = "This field is not blank")
     private  String level;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id", insertable = false, updatable = false)
-    private Company company;
-
-    @Column(name = "company_id", nullable = false)
     private UUID companyId;
 
 
-    @CreationTimestamp
     private Instant createdAt;
 
 }

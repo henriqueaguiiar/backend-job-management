@@ -40,6 +40,15 @@ public class Candidate implements Serializable {
     @CreationTimestamp
     private Instant createdAt;
 
+
+    public Candidate(CandidateDTO candidateDTO) {
+        this.name = candidateDTO.getName();
+        this.username = candidateDTO.getUsername();
+        this.email = candidateDTO.getEmail();
+        this.password = candidateDTO.getPassword();
+        this.description = candidateDTO.getDescription();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

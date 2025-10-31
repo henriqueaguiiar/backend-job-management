@@ -3,7 +3,6 @@ package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.jobsR;
 
 import io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.dto.JobDTO;
 import io.github.henriqueaguiiar.backend_job_manager.domain.entity.company.Job;
-import io.github.henriqueaguiiar.backend_job_manager.domain.mapper.JobMapper;
 import io.github.henriqueaguiiar.backend_job_manager.domain.services.impl.JobServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +19,16 @@ import java.net.URI;
 public class JobResource {
 
     private final JobServiceImpl jobService;
-    private final JobMapper jobMapper;
 
     @Autowired
-    public JobResource(JobServiceImpl jobService, JobMapper jobMapper) {
+    public JobResource(JobServiceImpl jobService) {
         this.jobService = jobService;
-        this.jobMapper = jobMapper;
     }
 
     @PostMapping
     public ResponseEntity<Object> createJob(@Valid @RequestBody JobDTO jobDTO) {
-        Job job = jobMapper.toEntity(jobDTO);
+        Job job = new Job(jobDTO);
         jobService.createJob(job);
-        return ResponseEntity.created(URI.create("/api/v1/job")).body(jobMapper.toDTO(job));
+        return ResponseEntity.created(URI.create("/api/v1/job")).body(jobDTO);
     }
 }

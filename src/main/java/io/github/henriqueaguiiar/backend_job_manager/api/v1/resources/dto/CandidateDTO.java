@@ -24,7 +24,4 @@ public class CandidateDTO implements Serializable {
     @Length(min = 10, max = 100, message = "Password must be between 10 and 100 characters")
     private String password;
     private String description;
-    private String resume;
-
-
 }
