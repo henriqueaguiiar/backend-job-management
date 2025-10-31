@@ -26,6 +26,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("api/v1/candidates").permitAll()
                             .requestMatchers("api/v1/company").permitAll()
+                            .requestMatchers("api/v1/auth/company").permitAll()
                             .anyRequest().authenticated();
                 });
         return  http.build();

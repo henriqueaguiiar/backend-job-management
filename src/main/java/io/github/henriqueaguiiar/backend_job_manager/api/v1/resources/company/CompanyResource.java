@@ -32,6 +32,7 @@ public class CompanyResource {
         try {
             Company company = new Company(companyDTO);
             companyService.createCompany(company);
+            companyDTO.setPassword(company.getPassword());
             var result = ResponseEntity.created(URI.create("/api/v1/company" + company.getId())).body(companyDTO);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
