@@ -3,6 +3,7 @@ package io.github.henriqueaguiiar.backend_job_manager.domain.services.impl;
 import io.github.henriqueaguiiar.backend_job_manager.domain.entity.Candidate;
 import io.github.henriqueaguiiar.backend_job_manager.domain.repository.CandidateRepository;
 import io.github.henriqueaguiiar.backend_job_manager.domain.services.CandidateService;
+import io.github.henriqueaguiiar.backend_job_manager.domain.services.exception.UserFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public void createCandidate(Candidate candidate) {
-        candidateRepository.save(candidate);
+       this.candidateRepository
+                .findByUsernameOrEmail(candidate.getUsername(), candidate.getEmail())
+                .ifPresent((user) ->{
+                    throw new UserFoundException();
+                });
     }
 }
