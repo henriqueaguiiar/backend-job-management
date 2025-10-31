@@ -30,7 +30,7 @@ public class CandidateResource {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody CandidateDTO candidateDTO) {
+    public ResponseEntity<Object> createCandidate(@Valid @RequestBody CandidateDTO candidateDTO) {
         try{
             Candidate candidate = candidateMapper.toEntity(candidateDTO);
            candidateService.createCandidate( candidate );
