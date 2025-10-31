@@ -26,11 +26,5 @@ public class CandidateDTO implements Serializable {
     private String description;
     private String resume;
 
-    public CandidateDTO(String name, String username, String email, String password, String description) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.description = description;
-    }
+
 }
