@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
+
 @Service
 public class AuthCompanyService {
 
@@ -49,9 +52,8 @@ public class AuthCompanyService {
         //Gera um TOKEN JWT pegado issuer id do objeto usando algoritimo HMAC256 usando a secret do application.yml
         Algorithm algorithm = Algorithm.HMAC256(key);
         var token = JWT.create().withIssuer("javagas")
-                .withSubject(company.getId().toString())
+                .withSubject(company.getId().toString()).withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
                 .sign(algorithm);
-
         return token.toString();
 
     }

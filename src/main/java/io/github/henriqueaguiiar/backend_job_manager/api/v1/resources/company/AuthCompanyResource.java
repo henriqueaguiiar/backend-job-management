@@ -25,7 +25,6 @@ public class AuthCompanyResource {
 
     @PostMapping("/company")
     public ResponseEntity<Object> createCompany(@RequestBody AuthCompanyDTO authCompanyDTO) {
-
         try{
             var result = this.authCompanyService.CompanyValidate(authCompanyDTO);
             return  ResponseEntity.ok().body(result);
