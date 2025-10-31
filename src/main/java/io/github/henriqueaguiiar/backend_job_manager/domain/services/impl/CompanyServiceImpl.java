@@ -5,16 +5,19 @@ import io.github.henriqueaguiiar.backend_job_manager.domain.repository.CompanyRe
 import io.github.henriqueaguiiar.backend_job_manager.domain.services.CompanyService;
 import io.github.henriqueaguiiar.backend_job_manager.domain.services.exception.CompanyFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, PasswordEncoder passwordEncoder) {
         this.companyRepository = companyRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -24,6 +27,8 @@ public class CompanyServiceImpl implements CompanyService {
                 .ifPresent((companyFind) -> {
                     throw new CompanyFoundException();
                 });
+        var password = passwordEncoder.encode(company.getPassword());
+        company.setPassword(password);
         this.companyRepository.save(company);
     }
 }
