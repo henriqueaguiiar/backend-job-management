@@ -1,7 +1,7 @@
-package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.exception;
+package io.github.henriqueaguiiar.backend_job_manager.domain.services.exception.handler;
 
 
-import io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.exception.dto.ExceptionHandlerDTO;
+import io.github.henriqueaguiiar.backend_job_manager.domain.services.exception.dto.ExceptionHandlerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ControllerAdvice
-public class ExceptionHandlerExceptionHandler{
+public class ExceptionHandlerNotFound {
 
 
     private MessageSource messageSource;
 
     @Autowired
-    public ExceptionHandlerExceptionHandler(MessageSource messageSource) {
+    public ExceptionHandlerNotFound(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 

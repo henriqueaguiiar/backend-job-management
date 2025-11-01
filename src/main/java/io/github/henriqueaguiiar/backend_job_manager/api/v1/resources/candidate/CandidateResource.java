@@ -1,7 +1,7 @@
 package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.candidate;
 
 
-import io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.dto.CandidateDTO;
+import io.github.henriqueaguiiar.backend_job_manager.domain.entity.dto.CandidateDTO;
 import io.github.henriqueaguiiar.backend_job_manager.domain.entity.Candidate;
 import io.github.henriqueaguiiar.backend_job_manager.domain.services.impl.CandidateServiceImpl;
 import jakarta.validation.Valid;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/v1/candidates")
+@RequestMapping("/candidates")
 public class CandidateResource {
 
 

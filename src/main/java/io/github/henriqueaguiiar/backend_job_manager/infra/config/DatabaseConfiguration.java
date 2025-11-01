@@ -1,4 +1,4 @@
-package io.github.henriqueaguiiar.backend_job_manager.config;
+package io.github.henriqueaguiiar.backend_job_manager.infra.config;
 
 
 import com.zaxxer.hikari.HikariConfig;

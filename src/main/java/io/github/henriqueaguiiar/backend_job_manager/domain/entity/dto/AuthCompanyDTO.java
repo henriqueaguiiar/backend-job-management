@@ -1,4 +1,4 @@
-package io.github.henriqueaguiiar.backend_job_manager.domain.services.auth.dto;
+package io.github.henriqueaguiiar.backend_job_manager.domain.entity.dto;
 
 
 import lombok.AllArgsConstructor;

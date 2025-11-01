@@ -1,6 +1,6 @@
 package io.github.henriqueaguiiar.backend_job_manager.domain.entity.company;
 
-import io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.dto.CompanyDTO;
+import io.github.henriqueaguiiar.backend_job_manager.domain.entity.dto.CompanyDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

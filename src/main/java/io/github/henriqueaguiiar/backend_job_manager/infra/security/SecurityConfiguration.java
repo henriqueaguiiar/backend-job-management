@@ -1,4 +1,4 @@
-package io.github.henriqueaguiiar.backend_job_manager.security;
+package io.github.henriqueaguiiar.backend_job_manager.infra.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

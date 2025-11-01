@@ -1,4 +1,4 @@
-package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.dto;
+package io.github.henriqueaguiiar.backend_job_manager.domain.entity.dto;
 
 
 import jakarta.validation.constraints.Email;
@@ -10,14 +10,11 @@ import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
-
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CompanyDTO implements Serializable {
+public class CandidateDTO implements Serializable {
     private static final long serialVersionUID = 1L;
-
 
     private String name;
     @Pattern(regexp = "^(?!\\s*$).+" , message = "Username cannot be blank")
@@ -26,6 +23,5 @@ public class CompanyDTO implements Serializable {
     private String email;
     @Length(min = 10, max = 100, message = "Password must be between 10 and 100 characters")
     private String password;
-    private String website;
     private String description;
 }

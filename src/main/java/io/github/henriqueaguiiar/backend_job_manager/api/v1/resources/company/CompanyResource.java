@@ -2,7 +2,7 @@ package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.company;
 
 
 
-import io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.dto.CompanyDTO;
+import io.github.henriqueaguiiar.backend_job_manager.domain.entity.dto.CompanyDTO;
 import io.github.henriqueaguiiar.backend_job_manager.domain.entity.company.Company;
 import io.github.henriqueaguiiar.backend_job_manager.domain.services.impl.CompanyServiceImpl;
 import jakarta.validation.Valid;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/v1/company")
+@RequestMapping("/company")
 public class CompanyResource {
 
 

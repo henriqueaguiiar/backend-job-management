@@ -1,9 +1,8 @@
-package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.company;
+package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.auth;
 
 
-import io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.dto.CompanyDTO;
-import io.github.henriqueaguiiar.backend_job_manager.domain.services.auth.AuthCompanyService;
-import io.github.henriqueaguiiar.backend_job_manager.domain.services.auth.dto.AuthCompanyDTO;
+import io.github.henriqueaguiiar.backend_job_manager.domain.services.impl.AuthCompanyServiceImpl;
+import io.github.henriqueaguiiar.backend_job_manager.domain.entity.dto.AuthCompanyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/auth")
 public class AuthCompanyResource {
 
-    private final AuthCompanyService authCompanyService;
+    private final AuthCompanyServiceImpl authCompanyService;
 
     @Autowired
-    public AuthCompanyResource(AuthCompanyService authCompanyService) {
+    public AuthCompanyResource(AuthCompanyServiceImpl authCompanyService) {
         this.authCompanyService = authCompanyService;
     }
 

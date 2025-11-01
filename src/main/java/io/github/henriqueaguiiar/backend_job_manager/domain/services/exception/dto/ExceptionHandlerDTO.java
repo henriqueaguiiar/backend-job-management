@@ -1,4 +1,4 @@
-package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.exception.dto;
+package io.github.henriqueaguiiar.backend_job_manager.domain.services.exception.dto;
 
 
 import lombok.AllArgsConstructor;

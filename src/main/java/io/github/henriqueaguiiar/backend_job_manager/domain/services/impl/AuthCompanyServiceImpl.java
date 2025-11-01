@@ -1,11 +1,10 @@
-package io.github.henriqueaguiiar.backend_job_manager.domain.services.auth;
+package io.github.henriqueaguiiar.backend_job_manager.domain.services.impl;
 
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import io.github.henriqueaguiiar.backend_job_manager.domain.repository.CompanyRepository;
-import io.github.henriqueaguiiar.backend_job_manager.domain.services.auth.dto.AuthCompanyDTO;
-import jakarta.validation.Valid;
+import io.github.henriqueaguiiar.backend_job_manager.domain.entity.dto.AuthCompanyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +15,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Service
-public class AuthCompanyService {
+public class AuthCompanyServiceImpl {
 
 
     private final CompanyRepository companyRepository;
@@ -26,7 +25,7 @@ public class AuthCompanyService {
     private String key;
 
     @Autowired
-    public AuthCompanyService(CompanyRepository companyRepository, PasswordEncoder passwordEncoder) {
+    public AuthCompanyServiceImpl(CompanyRepository companyRepository, PasswordEncoder passwordEncoder) {
         this.companyRepository = companyRepository;
         this.passwordEncoder = passwordEncoder;
     }

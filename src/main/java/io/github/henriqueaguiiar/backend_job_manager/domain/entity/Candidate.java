@@ -1,7 +1,7 @@
 package io.github.henriqueaguiiar.backend_job_manager.domain.entity;
 
 
-import io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.dto.CandidateDTO;
+import io.github.henriqueaguiiar.backend_job_manager.domain.entity.dto.CandidateDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
