@@ -18,4 +18,4 @@ spring:
 
   security:
     token:
-      secret: javagas_123#
+      secret: JAVAGAS_@123#
