@@ -14,14 +14,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private static final String[] swagger_list = {
-            "/v3/api-docs/**",
-            "/v3/api-docs.yaml",
-            "/swagger-ui/**",
-            "/swagger-ui.html",
-            "/swagger-resources/**",
-            "/webjars/**"
-    };
+
 
     private  SecurityFilter securityFilter;
     private  SecurityCandidateFilter securityCandidateFilter;
@@ -32,6 +25,14 @@ public class SecurityConfig {
         this.securityCandidateFilter = securityCandidateFilter;
     }
 
+    private static final String[] SWAGGER_LIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/webjars/**",
+            "/swagger-ui.html"
+    };
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
@@ -40,7 +41,7 @@ public class SecurityConfig {
                             .requestMatchers("/company/").permitAll()
                             .requestMatchers("/company/auth").permitAll()
                             .requestMatchers("/candidate/auth").permitAll()
-                                    .requestMatchers(swagger_list).permitAll();
+                                    .requestMatchers(SWAGGER_LIST).permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityCandidateFilter, BasicAuthenticationFilter.class)
