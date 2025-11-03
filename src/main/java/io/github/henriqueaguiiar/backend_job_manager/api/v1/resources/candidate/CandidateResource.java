@@ -1,5 +1,6 @@
 package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.candidate;
 
+import io.github.henriqueaguiiar.backend_job_manager.dto.ProfileCandidateResponseDTO;
 import io.github.henriqueaguiiar.backend_job_manager.modules.entities.CandidateEntity;
 import io.github.henriqueaguiiar.backend_job_manager.modules.entities.JobEntity;
 import io.github.henriqueaguiiar.backend_job_manager.modules.useCases.CreateCandidateUseCase;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -50,6 +52,15 @@ public class CandidateResource {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @Tag(name = "Candidato", description = "Informações do candidato")
+    @Operation(summary = "Perfil do candidato", description = "Essa função é responsável por buscar as informações do perfil do candidato")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ProfileCandidateResponseDTO.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "User not found")
+    })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> get(HttpServletRequest request) {
         var idCandidate = request.getAttribute("candidate_id");
 
@@ -65,7 +76,7 @@ public class CandidateResource {
 
     @GetMapping("/job")
     @PreAuthorize("hasRole('CANDIDATE')")
-    @Tag(name = "Candidato", description = "Informações do dandidato")
+    @Tag(name = "Candidato", description = "Informações do candidato")
     @Operation(summary = "Listagem de vagas disponiveis para o candidato", description = "Essa função é responsavel por listar todas as vagas disponiveis baseada no filtro")
     @ApiResponses(
             @ApiResponse(responseCode = "200", content = {
@@ -74,6 +85,7 @@ public class CandidateResource {
                     )
             })
     )
+    @SecurityRequirement(name = "JWT_auth")
     public List<JobEntity> findJobByFilter(@RequestParam String filter) {
        return this.listAllJobsByFilterUseCase.execute(filter);
     }
