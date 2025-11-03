@@ -43,16 +43,21 @@ public class AuthCandidateUseCase {
             throw new AuthenticationException();
         }
 
-        Algorithm algorithm = Algorithm.HMAC256(secretKey);
-        var token = JWT.create().withIssuer("javagas")
-                .withSubject(candidate.getId().toString())
-                .withClaim("roles", Arrays.asList("candidate"))
-                .withExpiresAt(Instant.now().plus(Duration.ofDays(2)))
-                .sign(algorithm);
-       var authCandidateResponse =  AuthCandidateResponseDTO.builder()
-                .access_token(token)
-                .build();
+        var roles = Arrays.asList("CANDIDATE");
 
-       return authCandidateResponse;
+        Algorithm algorithm = Algorithm.HMAC256(secretKey);
+        var expiresIn = Instant.now().plus(Duration.ofMinutes(10));
+        var token = JWT.create()
+                .withIssuer("javagas")
+                .withSubject(candidate.getId().toString())
+                .withClaim("roles", roles)
+                .withExpiresAt(expiresIn)
+                .sign(algorithm);
+
+        var authCandidateResponse = AuthCandidateResponseDTO.builder()
+                .access_token(token)
+                .expiresIn(expiresIn.toEpochMilli())
+                .build();
+        return authCandidateResponse;
     }
 }
