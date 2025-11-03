@@ -31,8 +31,8 @@ public class DatabaseConfiguration {
         hikariconfig.setMaximumPoolSize(10);
         hikariconfig.setMaxLifetime(600000);
         hikariconfig.setConnectionTimeout(30000);
-        hikariconfig.setPoolName("HikariCP");
-        hikariconfig.setConnectionTestQuery("SELECT NOW()");
+        hikariconfig.setPoolName(" 光 Hikari CP");
+        hikariconfig.setConnectionTestQuery("SELECT NOW();");
 
         return new com.zaxxer.hikari.HikariDataSource(hikariconfig);
 
