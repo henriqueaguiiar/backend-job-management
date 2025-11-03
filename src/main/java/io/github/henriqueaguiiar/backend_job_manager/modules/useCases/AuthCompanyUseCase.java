@@ -3,6 +3,7 @@ package io.github.henriqueaguiiar.backend_job_manager.modules.useCases;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import io.github.henriqueaguiiar.backend_job_manager.dto.AuthCompanyDTO;
+import io.github.henriqueaguiiar.backend_job_manager.dto.AuthCompanyResponseDTO;
 import io.github.henriqueaguiiar.backend_job_manager.modules.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.naming.AuthenticationException;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 @Service
 public class AuthCompanyUseCase {
@@ -26,7 +28,7 @@ public class AuthCompanyUseCase {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String execute(AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
+    public AuthCompanyResponseDTO execute(AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
         var company = this.companyRepository.findByUsername(authCompanyDTO.getUsername()).orElseThrow(() -> {
             throw new UsernameNotFoundException("Username/password incorrect");
         });
@@ -39,10 +41,13 @@ public class AuthCompanyUseCase {
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
+        var expiresIn = Instant.now().plus(Duration.ofHours(2));
+
         var token = JWT.create().withIssuer("javagas")
                 .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
-                .withSubject(company.getId().toString()).sign(algorithm);
-
-        return token;
+                .withSubject(company.getId().toString()).withClaim("roles", Arrays.asList("COMPANY")).sign(algorithm);
+        var authCompanyResponseDTODTO = AuthCompanyResponseDTO.builder()
+                .access_token(token).expiresIn(expiresIn.toEpochMilli()).build();
+        return authCompanyResponseDTODTO;
     }
 }
