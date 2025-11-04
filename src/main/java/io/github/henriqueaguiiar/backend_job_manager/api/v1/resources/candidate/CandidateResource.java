@@ -27,6 +27,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/candidate")
+@Tag(name = "Candidato", description = "Informações do candidato")
 public class CandidateResource {
 
     private final CreateCandidateUseCase createCandidateUseCase;
@@ -41,6 +42,13 @@ public class CandidateResource {
     }
 
     @PostMapping("/")
+    @Operation(summary = "Cadastro de candidato", description = "Essa função é responsável por cadastrar um candidato")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = CandidateEntity.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Usuário já existe")
+    })
     public ResponseEntity<Object> create(@Valid @RequestBody CandidateEntity candidateEntity) {
         try {
             var result = createCandidateUseCase.execute(candidateEntity);
@@ -52,7 +60,6 @@ public class CandidateResource {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('CANDIDATE')")
-    @Tag(name = "Candidato", description = "Informações do candidato")
     @Operation(summary = "Perfil do candidato", description = "Essa função é responsável por buscar as informações do perfil do candidato")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
@@ -73,23 +80,17 @@ public class CandidateResource {
         }
     }
 
-
     @GetMapping("/job")
     @PreAuthorize("hasRole('CANDIDATE')")
-    @Tag(name = "Candidato", description = "Informações do candidato")
-    @Operation(summary = "Listagem de vagas disponiveis para o candidato", description = "Essa função é responsavel por listar todas as vagas disponiveis baseada no filtro")
-    @ApiResponses(
+    @Operation(summary = "Listagem de vagas disponível para o candidato", description = "Essa função é responsável por listar todas as vagas disponíveis, baseada no filtro")
+    @SecurityRequirement(name = "jwt_auth")
+    @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
-                    @Content(
-                            array = @ArraySchema(schema =  @Schema(implementation = JobEntity.class))
-                    )
+                    @Content(array = @ArraySchema(schema = @Schema(implementation = JobEntity.class)))
             })
-    )
-    @SecurityRequirement(name = "JWT_auth")
+    })
     public List<JobEntity> findJobByFilter(@RequestParam String filter) {
-       return this.listAllJobsByFilterUseCase.execute(filter);
+        return this.listAllJobsByFilterUseCase.execute(filter);
     }
-
-
 }
 
