@@ -3,6 +3,7 @@ package io.github.henriqueaguiiar.backend_job_manager.modules.useCases;
 
 import io.github.henriqueaguiiar.backend_job_manager.exceptions.JobNotFoundException;
 import io.github.henriqueaguiiar.backend_job_manager.exceptions.UserNotFoundException;
+import io.github.henriqueaguiiar.backend_job_manager.modules.entities.ApplyJobEntity;
 import io.github.henriqueaguiiar.backend_job_manager.modules.repository.ApplyJobRepository;
 import io.github.henriqueaguiiar.backend_job_manager.modules.repository.CandidateRepository;
 import io.github.henriqueaguiiar.backend_job_manager.modules.repository.JobRepository;
@@ -24,8 +25,8 @@ public class ApplyJobUseCase {
         this.jobRepository = jobRepository;
         this.applyJobRepository = applyJobRepository;
     }
-    
-    public void execute(UUID idCandidate, UUID idJob){
+
+    public ApplyJobEntity execute(UUID idCandidate, UUID idJob){
         this.candidateRepository.findById(idCandidate).orElseThrow(() ->{
             throw new UserNotFoundException();
         });
@@ -34,7 +35,13 @@ public class ApplyJobUseCase {
         this.jobRepository.findById(idJob).orElseThrow(() ->{
             throw new JobNotFoundException();
         });
-    }
 
+        var applyJob = ApplyJobEntity.builder()
+                        .candidateId(idCandidate)
+                                .jobId(idJob)
+                                        .build();
+        applyJob = applyJobRepository.save(applyJob);
+        return applyJob;
+    }
 
 }
