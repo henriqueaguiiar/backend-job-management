@@ -16,12 +16,12 @@ public class SecurityConfig {
 
 
 
-    private  SecurityFilter securityFilter;
+    private SecurityCompanyFilter securityCompanyFilter;
     private  SecurityCandidateFilter securityCandidateFilter;
 
     @Autowired
-    public SecurityConfig(SecurityFilter securityFilter, SecurityCandidateFilter securityCandidateFilter) {
-        this.securityFilter = securityFilter;
+    public SecurityConfig(SecurityCompanyFilter securityCompanyFilter, SecurityCandidateFilter securityCandidateFilter) {
+        this.securityCompanyFilter = securityCompanyFilter;
         this.securityCandidateFilter = securityCandidateFilter;
     }
 
@@ -45,7 +45,7 @@ public class SecurityConfig {
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityCandidateFilter, BasicAuthenticationFilter.class)
-                .addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
+                .addFilterBefore(securityCompanyFilter, BasicAuthenticationFilter.class);
 
         return http.build();
     }
