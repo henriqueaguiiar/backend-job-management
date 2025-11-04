@@ -3,6 +3,7 @@ package io.github.henriqueaguiiar.backend_job_manager.api.v1.resources.candidate
 import io.github.henriqueaguiiar.backend_job_manager.dto.ProfileCandidateResponseDTO;
 import io.github.henriqueaguiiar.backend_job_manager.modules.entities.CandidateEntity;
 import io.github.henriqueaguiiar.backend_job_manager.modules.entities.JobEntity;
+import io.github.henriqueaguiiar.backend_job_manager.modules.useCases.ApplyJobUseCase;
 import io.github.henriqueaguiiar.backend_job_manager.modules.useCases.CreateCandidateUseCase;
 import io.github.henriqueaguiiar.backend_job_manager.modules.useCases.ListAllJobsByFilterUseCase;
 import io.github.henriqueaguiiar.backend_job_manager.modules.useCases.ProfileCandidateUseCase;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,12 +35,14 @@ public class CandidateResource {
     private final CreateCandidateUseCase createCandidateUseCase;
     private final ProfileCandidateUseCase profileCandidateUseCase;
     private final ListAllJobsByFilterUseCase listAllJobsByFilterUseCase;
+    private final ApplyJobUseCase applyJobUseCase;
 
     @Autowired
-    public CandidateResource(CreateCandidateUseCase createCandidateUseCase, ProfileCandidateUseCase profileCandidateUseCase, ListAllJobsByFilterUseCase listAllJobsByFilterUseCase) {
+    public CandidateResource(CreateCandidateUseCase createCandidateUseCase, ProfileCandidateUseCase profileCandidateUseCase, ListAllJobsByFilterUseCase listAllJobsByFilterUseCase, ApplyJobUseCase applyJobUseCase ) {
         this.createCandidateUseCase = createCandidateUseCase;
         this.profileCandidateUseCase = profileCandidateUseCase;
         this.listAllJobsByFilterUseCase = listAllJobsByFilterUseCase;
+        this.applyJobUseCase = applyJobUseCase;
     }
 
     @PostMapping("/")
@@ -91,6 +95,23 @@ public class CandidateResource {
     })
     public List<JobEntity> findJobByFilter(@RequestParam String filter) {
         return this.listAllJobsByFilterUseCase.execute(filter);
+    }
+
+
+    @PostMapping("/job/apply")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    @Operation(summary = "Inscrição do candidato para uma vaga", description = "Essa função é responsável por realizar a inscrição do candidato em uma vaga.")
+    @SecurityRequirement(name = "jwt_auth")
+    public ResponseEntity<Object> applyJob(HttpServletRequest request, @RequestBody UUID idJob){
+
+        var idCandidate = request.getAttribute("candidate_id");
+
+        try{
+            var result = this.applyJobUseCase.execute(UUID.fromString(idCandidate.toString()), idJob);
+            return ResponseEntity.ok().body(result);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
 
