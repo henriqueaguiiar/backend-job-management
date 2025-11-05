@@ -21,6 +21,6 @@ jobs:
       - name: Login docker
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build docker image
-        run: docker build -t rocketseat-education/gestao_vagas .
+        run: docker build -t henriqueaguiiar/gestao_vagas .
       - name: Publish image
-        run: docker push rocketseat-education/gestao_vagas
+        run: docker push henriqueaguiiar/gestao_vagas
