@@ -30,7 +30,7 @@ public class JWTProvider {
 
             return tokenDecoded;
         } catch (JWTVerificationException ex) {
-            ex.printStackTrace();
+            ex.getMessage();
             return null;
         }
     }
