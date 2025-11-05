@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.github.henriqueaguiiar</groupId>
-	<artifactId>backend-job-manager</artifactId>
+	<artifactId>gestao_vagas</artifactId>
 	<version>0.0.1</version>
 	<name>backend-job-manager</name>
 	<description>backend-job-manager</description>
